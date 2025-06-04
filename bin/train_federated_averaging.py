@@ -10,7 +10,7 @@ from dataset.cifar_100 import (
 from models.dino_backbone import get_dino_backbone_model
 
 if __name__ == "__main__":
-    train_dataloader, val_dataloader = get_cifar_dataloaders(batch_size=32)
+    train_dataloader, val_dataloader = get_cifar_dataloaders(batch_size=64)
     model = get_dino_backbone_model()
     trainset, _ = get_cifar_100_datasets()
     trainset, valset = get_cifar_100_train_valset_datasets(trainset)
@@ -19,15 +19,15 @@ if __name__ == "__main__":
         training_name="fl_client_training_params",
         model=model,
         loss_function=nn.CrossEntropyLoss(),
-        learning_rate=1e-3,
+        learning_rate=5e-4,
         optimizer_class=torch.optim.SGD,  # type: ignore
         scheduler_class=torch.optim.lr_scheduler.CosineAnnealingLR,  # type: ignore
-        epochs=5,
+        epochs=4,
         optimizer_params={
             "momentum": 0.9,
             "weight_decay": 5e-4,
         },
-        scheduler_params={"T_max": 10},
+        scheduler_params={"T_max": 20},
     )
 
     fedav = FederatedAveraging(
