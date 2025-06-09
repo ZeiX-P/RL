@@ -122,6 +122,7 @@ def train_model(
     *,
     training_params: TrainingParams,
     train_loader: DataLoader,
+    client_id,
     val_loader: Optional[DataLoader] = None,
     project_name: Optional[str] = None,
     wandb_log: bool = True,
@@ -224,6 +225,13 @@ def train_model(
                     model_name = f"{training_params.training_name}_best.pth"
                     torch.save(model.state_dict(), model_name)
                     wandb.save(model_name)
+            
+        wandb.log({
+                f"client_{client_id}/val_loss": val_loss,
+                f"client_{client_id}/val_accuracy": val_accuracy,
+                "epoch": epoch,
+                "round": round
+            })
 
     if use_wandb:
         wandb.finish()

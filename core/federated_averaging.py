@@ -229,6 +229,7 @@ class FederatedAveraging:
                 res_dict = train_model(
                     training_params=training_params,
                     train_loader=train_loader,
+                    client_id=client_id,
                     val_loader=val_loader,
                     wandb_log=False,
                     wandb_save=False,
