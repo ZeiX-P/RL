@@ -122,7 +122,6 @@ def train_model(
     *,
     training_params: TrainingParams,
     train_loader: DataLoader,
-    client_id,
     val_loader: Optional[DataLoader] = None,
     project_name: Optional[str] = None,
     wandb_log: bool = True,
@@ -227,8 +226,8 @@ def train_model(
                     wandb.save(model_name)
             
         wandb.log({
-                f"client_{client_id}/val_loss": val_loss,
-                f"client_{client_id}/val_accuracy": val_accuracy,
+                f"val_loss": val_loss,
+                f"val_accuracy": val_accuracy,
                 "epoch": epoch,
                 "round": round
             })
